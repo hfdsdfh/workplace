@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Проверка, что скрипт запущен из Bash, и если да, продолжить
 if [ -n "$BASH_VERSION" ]; then
   echo "Устанавливаем Zsh и необходимые пакеты..."
   
@@ -8,20 +7,16 @@ if [ -n "$BASH_VERSION" ]; then
   sudo apt update
   sudo apt install -y zsh git curl jq
   
-  # Смена оболочки на Zsh для текущего пользователя
   chsh -s /bin/zsh
   
   # Установка Oh My Zsh без автоматического запуска Zsh
   RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   
-  # Перезапуск скрипта в новой сессии Zsh
-  echo "Перезапуск скрипта в Zsh..."
   exec zsh "$0" "$@"
 
   exit 0
 fi
 
-# Вторая часть скрипта, которая выполняется после перезапуска в Zsh
 
 # Изменение темы на 'eastwood'
 sed -i 's/^ZSH_THEME=".*"/ZSH_THEME="eastwood"/' ~/.zshrc
@@ -30,9 +25,6 @@ sed -i 's/^ZSH_THEME=".*"/ZSH_THEME="eastwood"/' ~/.zshrc
 cat <<EOF >> ~/.zshrc
 
 # Custom aliases
-alias ll='ls -la'
-alias gs='git status'
-alias gc='git commit -m'
 alias zs='/usr/local/bin/zellij --layout ~/.config/zellij/layout.kdl'
 EOF
 
