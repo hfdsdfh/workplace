@@ -58,6 +58,9 @@ EXTRACTED_DIR=$(ls -d lnav-*/ | head -n 1)
 sudo mv "$EXTRACTED_DIR/lnav" /usr/local/bin/
 rm -rf "$EXTRACTED_DIR" "lnav-$LATEST_VERSION.zip"
 
+# Установка JetBrain Mono
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/JetBrains/JetBrainsMono/master/install_manual.sh)"
+
 # Создание конфигурационного файла для Zellij
 mkdir -p ~/.config/zellij
 cat <<EOF > ~/.config/zellij/layout.kdl
