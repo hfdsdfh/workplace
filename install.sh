@@ -26,6 +26,7 @@ cat <<EOF >> ~/.zshrc
 
 # Custom aliases
 alias zs='/usr/local/bin/zellij --layout ~/.config/zellij/layout.kdl'
+alias lnav='/usr/local/bin/lnav'
 EOF
 
 # Установка плагина zsh-autosuggestions
@@ -46,6 +47,16 @@ curl -L $ASSET_URL -o zellij-$LATEST_VERSION.tar.gz
 tar -xvzf zellij-$LATEST_VERSION.tar.gz
 sudo mv zellij /usr/local/bin/
 rm -rf zellij-$LATEST_VERSION*
+# lnav
+LATEST_VERSION=$(curl --silent "https://api.github.com/repos/tstack/lnav/releases/latest" | jq -r '.tag_name')
+ASSET_URL=$(curl --silent "https://api.github.com/repos/tstack/lnav/releases/latest" | jq -r '.assets[] | select(.name | test("lnav-.*-linux-musl-x86_64.zip")) | .browser_download_url')
+
+# Скачивание, распаковка и установка Zellij
+curl -L $ASSET_URL -o lnav-$LATEST_VERSION.zip
+unzip lnav-$LATEST_VERSION.zip
+EXTRACTED_DIR=$(ls -d lnav-*/ | head -n 1)
+sudo mv "$EXTRACTED_DIR/lnav" /usr/local/bin/
+rm -rf "$EXTRACTED_DIR" "lnav-$LATEST_VERSION.zip"
 
 # Создание конфигурационного файла для Zellij
 mkdir -p ~/.config/zellij
